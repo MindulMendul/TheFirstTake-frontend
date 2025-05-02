@@ -5,7 +5,7 @@ export default function SignInButton() {
     <form
       action={async () => {
         "use server"
-        const uri=`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.AUTH_KAKAO_ID}&redirect_uri=${process.env.BACKEND_AUTH_KAKAO_URL}&response_type=code`;
+        const uri=`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.AUTH_KAKAO_ID}&redirect_uri=${"http://172.16.101.234:3000/api/auth/callback/kakao"}&response_type=code`;
         redirect(uri);
       }}
     >
