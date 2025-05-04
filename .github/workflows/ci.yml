@@ -1,0 +1,125 @@
+name: pnpm ci Workflow
+on:
+  push:
+
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'pnpm'
+    - name: Install dependencies
+      run: pnpm install
+      # lint 확인 및 수정
+  
+  lint:
+    runs-on: ubuntu-latest
+    needs: install-dependencies # install-dependencies 단계가 실행되어야 함
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+    steps:
+      - name: Cheeckout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # node_modules가 cache 된 게 있는지 확인
+      - name: Restore node_modules from Cache
+        id: restore-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node
+
+      - name: Install Dependencies
+        # restore-node-modules의 outputs cache가 없으면 실행
+        if: steps.restore-node-nodules.outputs.cache-hit != 'true'
+        run: pnpm install
+
+      - name: Run Lint
+        run: pnpm run lint
+
+  # 테스트 검증
+  test:
+    runs-on: ubuntu-latest
+    needs: install-dependencies # install-dependencies 단계가 실행되어야 함
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+    steps:
+      - name: Cheeckout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # node_modules가 cache 된 게 있는지 확인
+      - name: Restore node_modules from Cache
+        id: restore-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node
+
+      - name: Install Dependencies
+        # restore-node-modules의 outputs cache가 없으면 실행
+        if: steps.restore-node-nodules.outputs.cache-hit != 'true'
+        run: pnpm install
+
+      - name: Run Test
+        run: pnpm run test
+
+  # React Build
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test] # lint, test 단계가 모두 실행되어야 함
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+    steps:
+      - name: Cheeckout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # node_modules가 cache 된 게 있는지 확인
+      - name: Restore node_modules from Cache
+        id: restore-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node
+
+      - name: Install Dependencies
+        # restore-node-modules의 outputs cache가 없으면 실행
+        if: steps.restore-node-nodules.outputs.cache-hit != 'true'
+        run: pnpm install
+
+      - name: Run Build
+        run: pnpm run build
