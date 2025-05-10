@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
   return (
-    <div className="">
+    <div className="flex flex-col">
       CI 페이지
       <br/>
+      질문지
       <ThemeButton text={"이동하기"} handleClick={()=>{router.push('/llm')}}/>
     </div>
   );
