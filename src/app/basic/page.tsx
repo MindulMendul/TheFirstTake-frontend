@@ -7,9 +7,9 @@ export default function Home() {
   const router = useRouter();
   return (
     <div className="">
-      웹페이지 시작
+      BI 페이지
       <br/>
-      <ThemeButton text={"이동하기"} handleClick={()=>{router.push('/basic')}}/>
+      <ThemeButton text={"이동하기"} handleClick={()=>{router.push('/cloth')}}/>
     </div>
   );
 }
