@@ -25,10 +25,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen max-w-[768px] mx-auto`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen max-w-[480px] mx-auto`}
       >
         <div className="flex justify-center items-center h-full">
+        {/* <SessionProvider session={session} refetchInterval={5 * 60}> */}
           {children}
+        {/* </SessionProvider> */}
         </div>
       </body>
     </html>
