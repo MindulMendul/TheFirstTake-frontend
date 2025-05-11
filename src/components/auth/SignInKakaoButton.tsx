@@ -6,5 +6,5 @@ export default function SignInKakaoButton() {
     >
       <button type="submit">Kakao Sign In</button>
     </form>
-  )
+  );
 }

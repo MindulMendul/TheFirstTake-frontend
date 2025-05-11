@@ -1,5 +1,5 @@
-import CryptoJS from "crypto-js";
+import CryptoJS from 'crypto-js';
 
-export const encrypt = (str:string)=>{
+export const encrypt = (str: string) => {
   return CryptoJS.SHA256(str).toString();
-}
+};

@@ -1,20 +1,20 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import './globals.css';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Team30",
-  description: "Software Maestro",
+  title: 'Team30',
+  description: 'Software Maestro',
 };
 
 export default function RootLayout({
@@ -24,12 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen max-w-[768px] mx-auto`}
-      >
-        <div className="flex justify-center items-center h-full">
-          {children}
-        </div>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen max-w-[768px] mx-auto`}>
+        <div className="flex justify-center items-center h-full">{children}</div>
       </body>
     </html>
   );

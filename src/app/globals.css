@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 html {
   font-size: 62.5%;
@@ -17,7 +17,7 @@ html {
 }
 
 @theme {
-  --color-ccblue: oklch(0.59 0.20 0.4 112.33);
+  --color-ccblue: oklch(0.59 0.2 0.4 112.33);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,4 +32,3 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-

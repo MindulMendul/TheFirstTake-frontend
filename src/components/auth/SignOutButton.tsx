@@ -1,25 +1,23 @@
-'use client'
+'use client';
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 export default function SignOutButton() {
-  const router=useRouter();
+  const router = useRouter();
   const handleLogout = async () => {
     const res = await fetch(`${process.env.TEAM30_BASE_URL}/api/auth/logout/kakao`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({})
+      body: JSON.stringify({}),
     });
 
-    if(res.ok) {
+    if (res.ok) {
       router.push('/');
     }
   };
 
-  return (
-    <button onClick={handleLogout}>Sign Out</button>
-  );
+  return <button onClick={handleLogout}>Sign Out</button>;
 }

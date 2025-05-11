@@ -1,2 +1,1 @@
-interface LLMQuestionType {
-}
+interface LLMQuestionType {}
