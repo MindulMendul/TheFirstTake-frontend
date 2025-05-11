@@ -16,6 +16,10 @@ html {
   --font-mono: var(--font-geist-mono);
 }
 
+@theme {
+  --color-ccblue: oklch(0.59 0.20 0.4 112.33);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
