@@ -1,6 +1,6 @@
-type QuestionType = {
+type AnswerType = {
   question: string;
-  option: string;
+  answer: string;
 };
 
 type QuestionAPIType = {

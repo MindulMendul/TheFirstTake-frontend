@@ -1,112 +1,62 @@
 'use client';
 
-import { getUserInfo } from '@/apis/API';
+import { getUserInfo } from '@/apis/clothAPI';
 import Dropdown from '@/components/Dropdown';
 import DropdownOption from '@/components/DropdownOption';
 import ThemeButton from '@/components/ThemeButton';
+import useAnswerInfo from '@/store/answerInfo';
 import { useRouter } from 'next/navigation';
-import { MouseEventHandler, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 
-export default function Home() {
+export default function UserInfo() {
   const router = useRouter();
 
-  const [tall, setTall] = useState('0');
-  const [weight, setWeight] = useState('0');
-  const [gender, setGender] = useState('0');
-  const [age, setAge] = useState('0');
+  const [questions, setQuestion] = useState([] as Array<QuestionAPIType>);
+  const [answers, setAnswers] = useState([] as Array<AnswerType>);
 
-  const submit = async () => {
-    const basicInfo = {
-      tall: tall,
-      weight: weight,
-      gender: gender,
-      age: age,
-    };
+  const { addAnswers } = useAnswerInfo();
 
-    const [response, error] = await getUserInfo(basicInfo);
-    if (error) {
-      console.error(error);
-      alert('user info error');
-      return;
-    }
+  useEffect(() => {
+    (async () => {
+      const [response, error] = await getUserInfo();
+      if (error) {
+        console.error(error);
+        alert('user info error');
+        return;
+      }
 
-    console.log(response.data);
+      console.log(response.data);
+      setQuestion(response.data);
+    })();
+  }, []);
+
+  const submit = () => {
+    answers.forEach((ans) => {
+      addAnswers(ans);
+    });
+
     router.push('/client-info');
   };
 
-  const handleClickTall: MouseEventHandler<HTMLButtonElement> = (e) => {
-    setTall(e.currentTarget.value);
-  };
-  const handleClickWeight: MouseEventHandler<HTMLButtonElement> = (e) => {
-    setWeight(e.currentTarget.value);
-  };
-  const handleClickAge: MouseEventHandler<HTMLButtonElement> = (e) => {
-    setAge(e.currentTarget.value);
-  };
-  const handleClickGender: MouseEventHandler<HTMLButtonElement> = (e) => {
-    setGender(e.currentTarget.value);
+  const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    setAnswers((oldValues) => [
+      ...oldValues.filter((v) => v.question != e.currentTarget.title),
+      { question: e.currentTarget.title, answer: e.currentTarget.value },
+    ]);
   };
 
   return (
     <div className="flex flex-col">
       UI 페이지
-      <form>ㅎㅇ</form>
-      <div>
-        <Dropdown title={'키'}>
-          <DropdownOption value={'160'} handleClick={handleClickTall}>
-            a1
-          </DropdownOption>
-          <DropdownOption value={'170'} handleClick={handleClickTall}>
-            a2
-          </DropdownOption>
-          <DropdownOption value={'180'} handleClick={handleClickTall}>
-            a3
-          </DropdownOption>
-          <DropdownOption value={'190'} handleClick={handleClickTall}>
-            a4
-          </DropdownOption>
+      {questions.map((question, questionIdx) => (
+        <Dropdown title={question.question} key={questionIdx}>
+          {question.options.map((option, optionIdx) => (
+            <DropdownOption key={optionIdx} value={option} question={question.question} handleClick={handleClick}>
+              {option}
+            </DropdownOption>
+          ))}
         </Dropdown>
-
-        <Dropdown title={'몸무게'}>
-          <DropdownOption value={'50'} handleClick={handleClickWeight}>
-            a1
-          </DropdownOption>
-          <DropdownOption value={'60'} handleClick={handleClickWeight}>
-            a2
-          </DropdownOption>
-          <DropdownOption value={'70'} handleClick={handleClickWeight}>
-            a3
-          </DropdownOption>
-          <DropdownOption value={'80'} handleClick={handleClickWeight}>
-            a4
-          </DropdownOption>
-        </Dropdown>
-      </div>
-      <div>
-        <Dropdown title={'나이'}>
-          <DropdownOption value={'0'} handleClick={handleClickAge}>
-            a1
-          </DropdownOption>
-          <DropdownOption value={'10'} handleClick={handleClickAge}>
-            a2
-          </DropdownOption>
-          <DropdownOption value={'20'} handleClick={handleClickAge}>
-            a3
-          </DropdownOption>
-          <DropdownOption value={'30'} handleClick={handleClickAge}>
-            a4
-          </DropdownOption>
-        </Dropdown>
-
-        <Dropdown title={'성별'}>
-          <DropdownOption value={'남'} handleClick={handleClickGender}>
-            a1
-          </DropdownOption>
-          <DropdownOption value={'여'} handleClick={handleClickGender}>
-            a2
-          </DropdownOption>
-        </Dropdown>
-      </div>
+      ))}
       <ThemeButton text={'이동하기'} handleClick={submit} />
     </div>
   );

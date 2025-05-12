@@ -6,4 +6,4 @@ export const getUserInfo = async () => requestAPI(`/api/flow/user-info`, 'GET');
 
 export const getClientInfo = async () => requestAPI(`/api/flow/client-info`, 'GET');
 
-export const getSaveInfo = async (info: any) => requestAPI(`/api/flow/save-info`, 'POST', info);
+export const postSaveInfo = async (info: any) => requestAPI(`/api/flow/save-info`, 'POST', info);

@@ -1,61 +1,63 @@
 'use client';
 
-import { getLLMQuestion } from '@/apis/API';
+import { getUserInfo } from '@/apis/clothAPI';
+import Dropdown from '@/components/Dropdown';
+import DropdownOption from '@/components/DropdownOption';
 import ThemeButton from '@/components/ThemeButton';
+import useAnswerInfo from '@/store/answerInfo';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 
 export default function Home() {
   const router = useRouter();
-  const [questionList, setQuestionList] = useState(new Map());
-  const [resultList, setResultList] = useState(new Map());
-  // 질문지 맵 {
-  //   question1:"asdf",
-  //   question2:"qwer",
-  // }
-  // 답변 맵 {
-  //   question1:"",
-  //   question2:""
-  // }
+
+  const [questions, setQuestion] = useState([] as Array<QuestionAPIType>);
+  const [answers, setAnswers] = useState([] as Array<AnswerType>);
+
+  const { addAnswers } = useAnswerInfo();
 
   useEffect(() => {
     (async () => {
-      const [questionData, questionError] = await getLLMQuestion();
-      if (questionError) {
-        alert('error');
+      const [response, error] = await getUserInfo();
+      if (error) {
+        console.error(error);
+        alert('client info error');
         return;
       }
 
-      const resultList = new Map();
-      questionData.keys().forEach((e: any) => {
-        resultList.set(e, questionData[e]);
-      });
-
-      setQuestionList(resultList);
+      console.log(response.data);
+      setQuestion(response.data);
     })();
   }, []);
+
+  const submit = () => {
+    answers.forEach((ans) => {
+      addAnswers(ans);
+    });
+
+    router.push('/llm');
+  };
+
+  const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    setAnswers((oldValues) => [
+      ...oldValues.filter((v) => v.question != e.currentTarget.title),
+      { question: e.currentTarget.title, answer: e.currentTarget.value },
+    ]);
+  };
 
   return (
     <div className="flex flex-col">
       LLM 페이지
-      <br />
-      {/* {questionList.map((e:string, i:number)=>(
-        <div key={i} onChange={(e)=>{
-          setQuestionList({
-            [q.valueName]:(e.target.value)
-            }
-          )
-        }}>
-          {q.question}
-          <input/>
-        </div>
-      ))} */}
-      <ThemeButton
-        text={'이동하기'}
-        handleClick={() => {
-          router.push('/result');
-        }}
-      />
+      {questions.map((question, questionIdx) => (
+        <Dropdown title={question.question} key={questionIdx}>
+          {question.options.map((option, optionIdx) => (
+            <DropdownOption key={optionIdx} value={option} question={question.question} handleClick={handleClick}>
+              {option}
+            </DropdownOption>
+          ))}
+        </Dropdown>
+      ))}
+      <ThemeButton text={'이동하기'} handleClick={submit} />
     </div>
   );
 }
