@@ -38,7 +38,7 @@ jobs:
     needs: [install-dependencies] # lint, test 단계가 모두 실행되어야 함
     strategy:
       matrix:
-        node-version: [20.x, 22.x]
+        node-version: [22.x]
     steps:
       - name: Cheeckout Repository
         uses: actions/checkout@v4
