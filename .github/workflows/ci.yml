@@ -39,7 +39,24 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install pnpm
+      # node_modules가 cache 된 게 있는지 확인
+      - name: Restore node_modules from Cache
+        id: restore-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node
+
+      - name: Install Dependencies
+        # restore-node-modules의 outputs cache가 없으면 실행
+        if: steps.restore-node-nodules.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Install Pnpm
+        # restore-node-modules의 outputs cache가 없으면 실행
+        if: steps.restore-node-nodules.outputs.cache-hit != 'true'
         run: npm install -g pnpm
 
       - name: Run Build
