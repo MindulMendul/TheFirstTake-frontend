@@ -6,5 +6,5 @@ export default function SignInButton() {
     >
       <button type="submit">Sign In</button>
     </form>
-  )
+  );
 }

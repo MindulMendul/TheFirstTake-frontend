@@ -13,5 +13,5 @@ declare global {
   //   kakao: any;
   // }
 }
- 
+
 export {};
