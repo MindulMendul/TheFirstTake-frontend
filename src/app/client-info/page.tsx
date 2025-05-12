@@ -1,6 +1,6 @@
 'use client';
 
-import { postClothInfo } from '@/apis/API';
+import { getClientInfo } from '@/apis/API';
 import ThemeButton from '@/components/ThemeButton';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ export default function Home() {
   const [data, setData] = useState(['질문지1', '질문지2']);
 
   const submit = async () => {
-    const [response, error] = await postClothInfo(data);
+    const [response, error] = await getClientInfo(data);
     if (error) {
       alert('error');
       return;

@@ -12,14 +12,35 @@ export const getLLMQuestion = async () => {
   return [data, error];
 };
 
-export const postBasicInfo = async (basic: any) => {
+export const getUserInfo = async (basic: any) => {
   let [data, error]: [any, any] = [basic, undefined];
+
+  try {
+    console.log(process.env.NEXT_PUBLIC_TFT_BACKEND_URL);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_TFT_BACKEND_URL}/api/flow/user-info`, {
+      method: 'get',
+      headers: {},
+    });
+    data = await response.json();
+  } catch (apiErr) {
+    error = apiErr;
+  }
 
   return [data, error];
 };
 
-export const postClothInfo = async (cloth: any) => {
+export const getClientInfo = async (cloth: any) => {
   let [data, error]: [any, any] = [cloth, undefined];
+
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_TFT_BACKEND_URL}/api/flow/client-info`, {
+      method: 'get',
+      headers: {},
+    });
+    data = await response.json();
+  } catch (apiErr) {
+    error = apiErr;
+  }
 
   return [data, error];
 };

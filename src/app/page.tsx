@@ -6,13 +6,12 @@ import { useRouter } from 'next/navigation';
 export default function Home() {
   const router = useRouter();
   return (
-    <div className="">
+    <div className="flex flex-col">
       웹페이지 시작
-      <br />
       <ThemeButton
         text={'이동하기'}
         handleClick={() => {
-          router.push('/basic');
+          router.push('/user-info');
         }}
       />
     </div>

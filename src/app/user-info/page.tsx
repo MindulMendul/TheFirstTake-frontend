@@ -1,6 +1,6 @@
 'use client';
 
-import { postBasicInfo } from '@/apis/API';
+import { getUserInfo } from '@/apis/API';
 import Dropdown from '@/components/Dropdown';
 import DropdownOption from '@/components/DropdownOption';
 import ThemeButton from '@/components/ThemeButton';
@@ -23,15 +23,15 @@ export default function Home() {
       age: age,
     };
 
-    const [response, error] = await postBasicInfo(basicInfo);
+    const [response, error] = await getUserInfo(basicInfo);
     if (error) {
       console.error(error);
-      alert('basic error');
+      alert('user info error');
       return;
     }
 
-    console.log(response);
-    router.push('/cloth');
+    console.log(response.data);
+    router.push('/client-info');
   };
 
   const handleClickTall: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -49,7 +49,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      BI 페이지
+      UI 페이지
       <form>ㅎㅇ</form>
       <div>
         <Dropdown title={'키'}>
