@@ -25,7 +25,6 @@ export default function Home() {
         return;
       }
 
-      console.log(response.data.options);
       setQuestion(response.data);
     })();
   }, []);

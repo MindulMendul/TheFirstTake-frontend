@@ -24,8 +24,6 @@ export default function ClientInfo() {
         alert('client info error');
         return;
       }
-
-      console.log(response.data);
       setQuestions(response.data);
     })();
   }, []);

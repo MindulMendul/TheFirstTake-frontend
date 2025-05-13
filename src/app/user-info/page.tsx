@@ -24,8 +24,6 @@ export default function UserInfo() {
         alert('user info error');
         return;
       }
-
-      console.log(response.data);
       setQuestions(response.data);
     })();
   }, []);
