@@ -11,7 +11,7 @@ import { MouseEventHandler, useEffect, useState } from 'react';
 export default function UserInfo() {
   const router = useRouter();
 
-  const [questions, setQuestion] = useState([] as Array<QuestionAPIType>);
+  const [questions, setQuestions] = useState([] as Array<QuestionAPIType>);
   const [answers, setAnswers] = useState([] as Array<AnswerType>);
 
   const { addAnswers } = useAnswerInfo();
@@ -26,7 +26,7 @@ export default function UserInfo() {
       }
 
       console.log(response.data);
-      setQuestion(response.data);
+      setQuestions(response.data);
     })();
   }, []);
 
@@ -48,7 +48,7 @@ export default function UserInfo() {
   return (
     <div className="flex flex-col">
       UI 페이지
-      {questions.map((question, questionIdx) => (
+      {questions?.map((question, questionIdx) => (
         <Dropdown title={question.question} key={questionIdx}>
           {question.options.map((option, optionIdx) => (
             <DropdownOption key={optionIdx} value={option} question={question.question} handleClick={handleClick}>

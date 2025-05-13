@@ -1,6 +1,6 @@
 import { requestAPI } from '@/apis/API';
 
-export const getNextQuestion = async () => requestAPI(`/api/flow/next-question`, 'GET');
+export const getAdditionalInfo = async () => requestAPI(`/api/flow/additional-info`, 'GET');
 
 export const getUserInfo = async () => requestAPI(`/api/flow/user-info`, 'GET');
 

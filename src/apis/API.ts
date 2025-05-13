@@ -5,6 +5,7 @@ export const requestAPI = async (url: string, method: Method, body?: any) => {
     const option: RequestInit = {
       method: method,
       headers: {},
+      credentials: 'include',
     };
     if (body) option['body'] = body;
 

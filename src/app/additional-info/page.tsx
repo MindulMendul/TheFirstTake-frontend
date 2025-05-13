@@ -1,6 +1,6 @@
 'use client';
 
-import { getUserInfo } from '@/apis/clothAPI';
+import { getAdditionalInfo } from '@/apis/clothAPI';
 import Dropdown from '@/components/Dropdown';
 import DropdownOption from '@/components/DropdownOption';
 import ThemeButton from '@/components/ThemeButton';
@@ -11,44 +11,46 @@ import { MouseEventHandler, useEffect, useState } from 'react';
 export default function Home() {
   const router = useRouter();
 
-  const [questions, setQuestion] = useState([] as Array<QuestionAPIType>);
-  const [answers, setAnswers] = useState([] as Array<AnswerType>);
+  const [question, setQuestion] = useState({} as QuestionAPIType);
+  const [answer, setAnswer] = useState({} as AnswerType);
 
   const { addAnswers } = useAnswerInfo();
 
   useEffect(() => {
     (async () => {
-      const [response, error] = await getUserInfo();
+      const [response, error] = await getAdditionalInfo();
       if (error) {
         console.error(error);
-        alert('client info error');
+        alert('additional info error');
         return;
       }
 
-      console.log(response.data);
+      console.log(response.data.options);
       setQuestion(response.data);
     })();
   }, []);
 
   const submit = () => {
-    answers.forEach((ans) => {
-      addAnswers(ans);
-    });
-
-    router.push('/llm');
+    addAnswers(answer);
+    router.push('/result');
   };
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    setAnswers((oldValues) => [
-      ...oldValues.filter((v) => v.question != e.currentTarget.title),
-      { question: e.currentTarget.title, answer: e.currentTarget.value },
-    ]);
+    setAnswer({ question: e.currentTarget.title, answer: e.currentTarget.value });
   };
 
   return (
     <div className="flex flex-col">
       LLM 페이지
-      {questions.map((question, questionIdx) => (
+      <Dropdown title={question.question}>
+        ㅎㅇ
+        {question.options?.map((option, optionIdx) => (
+          <DropdownOption key={optionIdx} value={option} question={question.question} handleClick={handleClick}>
+            {option}
+          </DropdownOption>
+        ))}
+      </Dropdown>
+      {/* {questions?.map((question, questionIdx) => (
         <Dropdown title={question.question} key={questionIdx}>
           {question.options.map((option, optionIdx) => (
             <DropdownOption key={optionIdx} value={option} question={question.question} handleClick={handleClick}>
@@ -56,7 +58,7 @@ export default function Home() {
             </DropdownOption>
           ))}
         </Dropdown>
-      ))}
+      ))} */}
       <ThemeButton text={'이동하기'} handleClick={submit} />
     </div>
   );
