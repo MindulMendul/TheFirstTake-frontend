@@ -8,7 +8,7 @@ export default function SigninForm() {
   const [PW, setPW] = useState('');
 
   const submit = async () => {
-    const res = await fetch(process.env.TEAM30_BACKEND_URL, {
+    const res = await fetch(process.env.NEXT_PUBLIC_TFT_BACKEND_URL, {
       method: 'POST',
       body: JSON.stringify({
         id: ID,

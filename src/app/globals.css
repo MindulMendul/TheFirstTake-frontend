@@ -16,6 +16,13 @@ html {
   --font-mono: var(--font-geist-mono);
 }
 
+@theme {
+  --color-ccblue: #27548A;
+  --color-ccbeige: #F5EEDC;
+  --color-ccnavy: #183B4E;
+  --color-ccyellow: #DDA853;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
