@@ -17,7 +17,10 @@ html {
 }
 
 @theme {
-  --color-ccblue: oklch(0.59 0.2 0.4 112.33);
+  --color-ccblue: #27548A;
+  --color-ccbeige: #F5EEDC;
+  --color-ccnavy: #183B4E;
+  --color-ccyellow: #DDA853;
 }
 
 @media (prefers-color-scheme: dark) {

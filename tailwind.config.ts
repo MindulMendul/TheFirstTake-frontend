@@ -12,15 +12,5 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
-  theme: {
-    extend: {
-      colors: {
-        ccbeige: '#F5EEDC',
-        ccblue: '#27548A',
-        ccnavy: '#183B4E',
-        ccyellow: '#DDA853'
-      },
-    },
-  },
   plugins: [],
 }
