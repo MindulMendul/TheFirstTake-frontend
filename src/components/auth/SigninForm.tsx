@@ -21,28 +21,28 @@ export default function SigninForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="input-group">
-        <label htmlFor="ID" className="input-label">
+      <div className="space-y-2">
+        <label htmlFor="ID" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           아이디
         </label>
         <input
           type="email"
           id="ID"
-          className="text-input text-gray-800"
-          placeholder="your_ID"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ccblue focus:border-transparent transition-all duration-200"
+          placeholder="thefirst@take.com"
           required
           value={ID}
           onChange={(e) => setID(e.target.value)}
         />
       </div>
-      <div className="input-group">
-        <label htmlFor="pw" className="input-label">
+      <div className="space-y-2">
+        <label htmlFor="pw" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           비밀번호
         </label>
         <input
           type="password"
           id="pw"
-          className="text-input text-gray-800"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ccblue focus:border-transparent transition-all duration-200"
           placeholder="••••••••"
           required
           value={PW}
@@ -51,7 +51,7 @@ export default function SigninForm() {
       </div>
       <button
         type="submit"
-        className="btn-primary w-full mb-4 flex justify-center items-center transition-all hover:translate-y-[-1px]"
+        className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-ccblue to-ccnavy text-white font-medium shadow-lg hover:shadow-xlfocus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-200 hover:-translate-y-0.5"
       >
         로그인
       </button>
