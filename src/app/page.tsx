@@ -8,29 +8,6 @@ export default function Home() {
   const [inputMode, setInputMode] = useState('text');
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-[#27548A] to-blue-600 rounded-2xl flex items-center justify-center">
-                <Heart className="w-7 h-7 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">The First Take</h1>
-                <p className="text-sm text-gray-500">패션 고민 끝!</p>
-              </div>
-            </div>
-            <Link
-              href="/signin"
-              className="px-5 py-2 bg-[#27548A] text-white rounded-xl hover:bg-[#1e4068] transition-colors"
-            >
-              시작하기
-            </Link>
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-5xl mx-auto px-4 py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
