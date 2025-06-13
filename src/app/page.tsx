@@ -57,7 +57,7 @@ export default function Home() {
           </div>
 
           {/* Input Mode Selector */}
-          <div className="p-8 border-b border-gray-100">
+          {/* <div className="p-8 border-b border-gray-100">
             <h3 className="text-2xl font-bold text-gray-900 text-center mb-6">어떤 방법이 편하세요?</h3>
             <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
               <button
@@ -90,7 +90,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Input Area */}
+          Input Area 
           <div className="p-8">
             {inputMode === 'text' && (
               <div className="space-y-6">
@@ -136,7 +136,7 @@ export default function Home() {
                 </label>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Generate Button */}
           <div className="bg-gray-50 p-8">
