@@ -59,7 +59,7 @@ export default function Home() {
           {/* Input Mode Selector */}
           <div className="p-8 border-b border-gray-100">
             <h3 className="text-2xl font-bold text-gray-900 text-center mb-6">어떤 방법이 편하세요?</h3>
-            <div className="grid md:grid-cols-3 gap-4 max-w-2xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto">
               <button
                 onClick={() => setInputMode('text')}
                 className={`p-6 rounded-2xl border-2 transition-all ${
@@ -72,18 +72,7 @@ export default function Home() {
                 </div>
                 <div className="text-sm text-gray-500 mt-1">가장 쉬워요</div>
               </button>
-              <button
-                onClick={() => setInputMode('voice')}
-                className={`p-6 rounded-2xl border-2 transition-all ${
-                  inputMode === 'voice' ? 'border-[#27548A] bg-[#27548A]/5' : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <Mic className={`w-8 h-8 mx-auto mb-3 ${inputMode === 'voice' ? 'text-[#27548A]' : 'text-gray-400'}`} />
-                <div className={`font-medium ${inputMode === 'voice' ? 'text-[#27548A]' : 'text-gray-600'}`}>
-                  음성으로
-                </div>
-                <div className="text-sm text-gray-500 mt-1">말하기만 하면 돼요</div>
-              </button>
+
               <button
                 onClick={() => setInputMode('image')}
                 className={`p-6 rounded-2xl border-2 transition-all ${
@@ -153,7 +142,7 @@ export default function Home() {
           <div className="bg-gray-50 p-8">
             <div className="text-center">
               <Link
-                href="/signin"
+                href="/user-info"
                 className="inline-flex items-center px-12 py-5 bg-[#27548A] text-white font-bold rounded-2xl hover:bg-[#1e4068] transition-all transform hover:scale-105 shadow-lg text-xl"
               >
                 <Wand2 className="mr-4 w-6 h-6" />

@@ -5,7 +5,7 @@ export default function StepPage({
   setAnswers,
 }: {
   optionName: string;
-  options: Array<{ id: any; label: any; emoji: any }>;
+  options: Array<any>; //Array<{ id: any; label: any; emoji: any }>;
   answers: any;
   setAnswers: any;
 }) {
@@ -13,19 +13,18 @@ export default function StepPage({
     <div className="px-8 py-24">
       <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">어떤 스타일이 좋으세요?</h3>
       <div className="grid md:grid-cols-4 gap-12 max-w-6xl mx-auto">
-        {options.map((option) => (
+        {options.map((option, ind) => (
           <button
-            key={option.id}
-            onClick={() => setAnswers({ ...answers, [optionName]: option.id })}
+            key={ind}
+            onClick={() => setAnswers({ ...answers, [optionName]: option })}
             className={`w-full p-16 rounded-xl border-2 text-center transition-all hover:scale-105 ${
-              answers[optionName] === option.id
+              answers[optionName] === option
                 ? 'border-[#27548A] bg-[#27548A]/5 shadow-lg'
                 : 'border-gray-200 hover:border-gray-300'
             }`}
           >
-            <div className="text-6xl mb-3">{option.emoji}</div>
-            <div className={`font-medium text-xl ${answers.option === option.id ? 'text-[#27548A]' : 'text-gray-700'}`}>
-              {option.label}
+            <div className={`font-medium text-xl ${answers.option === option ? 'text-[#27548A]' : 'text-gray-700'}`}>
+              {option}
             </div>
           </button>
         ))}

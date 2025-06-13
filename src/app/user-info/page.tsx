@@ -10,8 +10,7 @@ import { MouseEventHandler, useEffect, useState } from 'react';
 import { ArrowRight, Camera, Type, Wand2, CheckCircle, User, Clock, Target } from 'lucide-react';
 import Link from 'next/link';
 import StepPage from '@/components/info/StepPage';
-
-const testQuestion = [{ question: 'asdf', options: ['asdf'] }];
+import ProgressBar from '@/components/info/ProgressBar';
 
 export default function UserInfo() {
   // const router = useRouter();
@@ -19,29 +18,20 @@ export default function UserInfo() {
   const [questions, setQuestions] = useState([] as Array<QuestionAPIType>);
   // const [answers, setAnswers] = useState([] as Array<AnswerType>);
 
-  // const { addAnswers } = useAnswerInfo();
+  const { addAnswers } = useAnswerInfo();
 
-  const [currentStep, setCurrentStep] = useState(1);
-  const [answers, setAnswers] = useState({
-    occasion: '',
-    style: '',
-    description: '',
-  });
+  const [currentStep, setCurrentStep] = useState(0);
+  const [answers, setAnswers] = useState({} as any);
 
-  const occasions = [
-    { id: 'date', label: '데이트', emoji: '💕' },
-    { id: 'work', label: '회사', emoji: '💼' },
-    { id: 'casual', label: '일상', emoji: '☕' },
-    { id: 'party', label: '모임/파티', emoji: '🎉' },
-    { id: 'special', label: '특별한 날', emoji: '✨' },
+  const testQuestion = [
+    { question: 'asdf', options: ['asdf'] },
+    { question: 'qwer', options: ['qwer'] },
   ];
 
-  const styles = [
-    { id: 'minimal', label: '미니멀/심플', emoji: '⚪' },
-    { id: 'trendy', label: '트렌디', emoji: '🔥' },
-    { id: 'classic', label: '클래식', emoji: '👔' },
-    { id: 'comfortable', label: '편안함 중심', emoji: '😌' },
-    { id: 'unique', label: '개성있게', emoji: '🌈' },
+  const stepTitle = [
+    { title: '어떤 상황인가요?', subtitle: '패션을 잘 몰라도 괜찮아요. 상황만 알려주세요!' },
+    { title: '어떤 느낌을 원하세요?', subtitle: '대충 이런 느낌이면 AI가 알아서 찾아드려요' },
+    { title: '마지막으로 한 마디!', subtitle: '추가로 하고 싶은 말이 있다면 자유롭게!' },
   ];
 
   useEffect(() => {
@@ -75,18 +65,7 @@ export default function UserInfo() {
   return (
     <div className="min-h-screen mx-auto px-4 py-12">
       {/* Progress Bar */}
-      <div className="mb-12">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-md text-gray-500">진행률</span>
-          <span className="text-md font-medium text-[#27548A]">{Math.round((currentStep / 3) * 100)}%</span>
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div
-            className="bg-[#27548A] h-2 rounded-full transition-all duration-500"
-            style={{ width: `${(currentStep / 3) * 100}%` }}
-          ></div>
-        </div>
-      </div>
+      <ProgressBar progress={(currentStep / questions.length) * 100} />
 
       {/* Step Content */}
       <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
@@ -95,29 +74,27 @@ export default function UserInfo() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-[#27548A] rounded-full text-white font-bold text-xl mb-4">
             {currentStep}
           </div>
-          <h2 className="text-6xl font-bold text-gray-900 mt-6 mb-10">
-            {currentStep === 1 && '어떤 상황인가요?'}
-            {currentStep === 2 && '어떤 느낌을 원하세요?'}
-            {currentStep === 3 && '마지막으로 한 마디!'}
-          </h2>
-          <p className="text-gray-600 text-xl">
-            {currentStep === 1 && '패션을 잘 몰라도 괜찮아요. 상황만 알려주세요!'}
-            {currentStep === 2 && '대충 이런 느낌이면 AI가 알아서 찾아드려요'}
-            {currentStep === 3 && '추가로 하고 싶은 말이 있다면 자유롭게!'}
-          </p>
+          <h2 className="text-6xl font-bold text-gray-900 mt-6 mb-10">{stepTitle[currentStep].title}</h2>
+          <p className="text-gray-600 text-xl">{stepTitle[currentStep + 1].subtitle}</p>
         </div>
 
         {/* Step 1: Occasion */}
-        {currentStep === 1 && (
+        {questions[currentStep] && (
+          <StepPage
+            optionName={questions[currentStep].question}
+            options={questions[currentStep].options}
+            answers={answers}
+            setAnswers={setAnswers}
+          />
+        )}
+        {/* {currentStep === 1 && (
           <StepPage optionName={'occasion'} options={occasions} answers={answers} setAnswers={setAnswers} />
         )}
 
-        {/* Step 2: Style */}
         {currentStep === 2 && (
           <StepPage optionName={'style'} options={styles} answers={answers} setAnswers={setAnswers} />
         )}
 
-        {/* Step 3: Additional Description */}
         {currentStep === 3 && (
           <div className="p-8">
             <div className="max-w-2xl mx-auto">
@@ -135,7 +112,7 @@ export default function UserInfo() {
               </p>
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Navigation */}
         <div className="border-t border-gray-100 p-6">
@@ -154,7 +131,7 @@ export default function UserInfo() {
             {currentStep < 3 ? (
               <button
                 onClick={() => setCurrentStep(currentStep + 1)}
-                disabled={(currentStep === 1 && !answers.occasion) || (currentStep === 2 && !answers.style)}
+                disabled={!answers[questions[currentStep]?.question]}
                 className="w-1/3 h-24 px-8 py-3 bg-[#27548A] text-white rounded-xl hover:bg-[#1e4068] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 다음 →
