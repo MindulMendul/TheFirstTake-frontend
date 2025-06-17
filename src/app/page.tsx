@@ -142,7 +142,7 @@ export default function Home() {
           <div className="bg-gray-50 p-8">
             <div className="text-center">
               <Link
-                href="/user-info"
+                href="/chat"
                 className="inline-flex items-center px-12 py-5 bg-[#27548A] text-white font-bold rounded-2xl hover:bg-[#1e4068] transition-all transform hover:scale-105 shadow-lg text-xl"
               >
                 <Wand2 className="mr-4 w-6 h-6" />
