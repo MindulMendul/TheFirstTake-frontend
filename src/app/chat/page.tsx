@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { PhotoFolder } from '@/components/PhotoFolder';
 import { AppSidebar } from '@/components/AppSidebar';
-import { SidebarProvider, SidebarTrigger, SidebarInset } from '@/components/ui/sidebar';
-import { Send, BarChart3 } from 'lucide-react';
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { Send } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Textarea } from '@/components/ui/textarea';
 
 interface Message {
   id: string;
@@ -25,7 +25,7 @@ interface Photo {
   tags: string[];
 }
 
-const Index = () => {
+export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -36,6 +36,7 @@ const Index = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [currentChatId, setCurrentChatId] = useState('1');
+
   const [photos, setPhotos] = useState<Photo[]>([
     {
       id: '1',
@@ -129,31 +130,17 @@ const Index = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-[#F1FAFB]">
-        <AppSidebar currentChatId={currentChatId} onChatSelect={handleChatSelect} onNewChat={handleNewChat} />
+        <AppSidebar
+          currentChatId={currentChatId}
+          onChatSelect={handleChatSelect}
+          onNewChat={handleNewChat}
+          photos={photos}
+        />
 
         <SidebarInset className="flex flex-col">
-          {/* 헤더 */}
-          <div className="bg-white border-b border-gray-200 p-4 flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <SidebarTrigger />
-              <h1 className="text-2xl font-bold text-[#4993FA]">The First Take</h1>
-            </div>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                onClick={() => router.push('/graph')}
-                className="border-[#4993FA] text-[#4993FA] hover:bg-[#4993FA] hover:text-white"
-              >
-                <BarChart3 className="w-4 h-4 mr-2" />
-                그래프 보기
-              </Button>
-              <PhotoFolder photos={photos} />
-            </div>
-          </div>
-
           {/* 채팅 영역 */}
           <div className="flex-1">
-            <ScrollArea className="h-[calc(100vh-200px)] bg-white shadow-sm p-4">
+            <ScrollArea className="h-[calc(100vh-200px)] bg-white p-4">
               <div className="space-y-4">
                 {messages.map((message) => (
                   <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
@@ -162,7 +149,7 @@ const Index = () => {
                         message.isUser ? 'bg-[#4993FA] text-white' : 'bg-white text-gray-800'
                       }`}
                     >
-                      <p>{message.text}</p>
+                      <p className="text-lg md:text-2xl">{message.text}</p>
                       {message.images && (
                         <div className="grid grid-cols-2 gap-2 mt-3">
                           {message.images.map((image, index) => (
@@ -184,14 +171,25 @@ const Index = () => {
 
             {/* 입력 영역 */}
             <div className="mt-4 flex gap-2">
-              <Input
+              <Textarea
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="패션 추천을 요청해보세요..."
-                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                className="flex-1"
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }
+                }}
+                className="flex-1 resize-none min-h-[40px] max-h-[144px] text-base"
+                rows={1}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = 'auto';
+                  target.style.height = Math.min(target.scrollHeight, 144) + 'px';
+                }}
               />
-              <Button onClick={handleSendMessage} className="bg-[#4993FA] hover:bg-[#3A7BD8] text-white">
+              <Button onClick={handleSendMessage} className="bg-[#4993FA] hover:bg-[#3A7BD8] text-white ">
                 <Send className="w-4 h-4" />
               </Button>
             </div>
@@ -200,6 +198,4 @@ const Index = () => {
       </div>
     </SidebarProvider>
   );
-};
-
-export default Index;
+}

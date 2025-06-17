@@ -13,8 +13,11 @@ import {
   SidebarMenuItem,
   SidebarFooter,
 } from '@/components/ui/sidebar';
-import { MessageSquare, Plus, Settings, Trash2 } from 'lucide-react';
+import { MessageSquare, Plus, Settings, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { PhotoFolder } from '@/components/PhotoFolder';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useRouter } from 'next/navigation';
 
 interface Chat {
   id: string;
@@ -27,9 +30,11 @@ interface AppSidebarProps {
   currentChatId?: string;
   onChatSelect: (chatId: string) => void;
   onNewChat: () => void;
+  photos: any;
 }
 
-export function AppSidebar({ currentChatId, onChatSelect, onNewChat }: AppSidebarProps) {
+export function AppSidebar({ currentChatId, onChatSelect, onNewChat, photos }: AppSidebarProps) {
+  const router = useRouter();
   const [chats] = useState<Chat[]>([
     {
       id: '1',
@@ -40,7 +45,15 @@ export function AppSidebar({ currentChatId, onChatSelect, onNewChat }: AppSideba
   ]);
 
   return (
-    <Sidebar className="border-r border-gray-200 ">
+    <Sidebar className="border-r border-gray-200">
+      {/* 헤더 */}
+      <div className="bg-white border-b border-gray-200 p-4 flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <SidebarTrigger />
+          <h1 className="text-2xl font-bold text-[#4993FA]">The First Take</h1>
+        </div>
+      </div>
+
       <SidebarHeader className="p-4 bg-[#F1FAFB]">
         <Button
           onClick={onNewChat}
@@ -48,6 +61,9 @@ export function AppSidebar({ currentChatId, onChatSelect, onNewChat }: AppSideba
         >
           <Plus className="w-4 h-4" />새 채팅
         </Button>
+        <div className="flex gap-2">
+          <PhotoFolder photos={photos} />
+        </div>
       </SidebarHeader>
 
       <SidebarContent className="bg-[#F1FAFB]">
