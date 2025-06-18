@@ -9,6 +9,7 @@ import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { Send } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Textarea } from '@/components/ui/textarea';
+import Image from 'next/image';
 
 interface Message {
   id: string;
@@ -40,20 +41,26 @@ export default function Chat() {
   const [photos, setPhotos] = useState<Photo[]>([
     {
       id: '1',
-      url: `https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=400&fit=crop`,
+      url: `/cloth1.jpg`,
       description: '캐주얼 셔츠',
       tags: ['셔츠', '캐주얼'],
     },
     {
       id: '2',
-      url: `https://images.unsplash.com/photo-1503341338655-b5b1ad63fa54?w=400&h=400&fit=crop`,
+      url: `/cloth2.jpg`,
       description: '데님 자켓',
       tags: ['자켓', '데님'],
     },
     {
       id: '3',
-      url: `https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=400&fit=crop`,
+      url: `/cloth3.jpg`,
       description: '스니커즈',
+      tags: ['신발', '스니커즈'],
+    },
+    {
+      id: '4',
+      url: `/cloth3.jpg`,
+      description: '',
       tags: ['신발', '스니커즈'],
     },
   ]);
@@ -79,12 +86,7 @@ export default function Chat() {
         text: getAIResponse(inputValue),
         isUser: false,
         timestamp: new Date(),
-        images: inputValue.includes('추천')
-          ? [
-              `https://images.unsplash.com/photo-1521577352947-9bb58764b69a?w=300&h=300&fit=crop`,
-              `https://images.unsplash.com/photo-1506629905607-c75a07f44f14?w=300&h=300&fit=crop`,
-            ]
-          : undefined,
+        images: inputValue.includes('추천') ? [`/cloth1.jpg`, `/cloth2.jpg`] : undefined,
       };
       setMessages((prev) => [...prev, aiMessage]);
 
@@ -153,11 +155,13 @@ export default function Chat() {
                       {message.images && (
                         <div className="grid grid-cols-2 gap-2 mt-3">
                           {message.images.map((image, index) => (
-                            <img
+                            <Image
                               key={index}
                               src={image}
                               alt={`추천 아이템 ${index + 1}`}
-                              className="w-full h-32 object-cover rounded"
+                              className="w-full h-full object-cover rounded"
+                              width={250}
+                              height={250}
                             />
                           ))}
                         </div>
