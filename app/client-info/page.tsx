@@ -1,6 +1,6 @@
 'use client';
 
-import useAnswerInfo from '@/store/answerInfo';
+import useAnswerInfo from '@/shared/store/answerInfo';
 import { useEffect, useState } from 'react';
 import { ArrowRight, Wand2 } from 'lucide-react';
 import Options from '@/components/info/Options';

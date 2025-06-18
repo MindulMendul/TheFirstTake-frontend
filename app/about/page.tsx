@@ -1,6 +1,6 @@
 'use client';
 
-import { getSessionStart } from '@/apis/clothAPI';
+import { getSessionStart } from '@/shared/api/clothAPI';
 import ThemeButton from '@/components/ThemeButton';
 import Image from 'next/image';
 import SatisfactionSlider from '@/components/home/SatisfactionSlider';
