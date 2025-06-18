@@ -471,8 +471,6 @@ export default function GraphPage() {
                 // 드래그 중인 사진 노드와 호버된 그룹에 이펙트 적용
                 ...(node.type === 'group' && node.id === hoveredGroupId
                   ? {
-                      transform: 'scale(1.1)',
-                      transformOrigin: 'center',
                       filter: 'brightness(0.8)',
                       transition: 'all 0.2s ease-in-out',
                       zIndex: -1,
