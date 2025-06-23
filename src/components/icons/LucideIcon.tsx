@@ -1,5 +1,6 @@
+import { ColorType, makeColorSet } from '@/lib/color';
 import { cn } from '@/lib/utils';
-import colorSet, { ColorType } from '@/styles/color';
+import { lightColorSet } from '@/styles/color';
 import { icons } from 'lucide-react'; // lucide import
 import { HTMLAttributes } from 'react';
 
@@ -9,13 +10,18 @@ export interface LucideIconProps extends HTMLAttributes<HTMLOrSVGElement> {
   size?: number;
 }
 
-export default function LucideIcon({ name, color = 'gray9', size = 16, ...props }: LucideIconProps) {
+export default function LucideIcon({ name, color = 'blue-500', size = 16, ...props }: LucideIconProps) {
   const SelectLucideIcon = icons[name];
 
   const isClickEvent = !!props.onClick;
   const pointerStyle = isClickEvent ? 'cursor-pointer' : '';
 
   return (
-    <SelectLucideIcon color={colorSet[color]} size={size} className={cn(pointerStyle, props.className)} {...props} />
+    <SelectLucideIcon
+      color={makeColorSet(lightColorSet)[color]}
+      size={size}
+      className={cn(pointerStyle, props.className)}
+      {...props}
+    />
   );
 }

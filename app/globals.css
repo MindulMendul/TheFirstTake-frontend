@@ -7,6 +7,92 @@ html {
   font-size: 62.5%;
 }
 
+/* @theme-colors-start */
+/* 🤖 이 블록은 스크립트에 의해 자동으로 관리됩니다. 직접 수정하지 마세요. */
+@theme {
+  --color-blue-50: #e9eef3;
+  --color-blue-100: #dfe5ed;
+  --color-blue-150: #c7d3e1;
+  --color-blue-200: #adbed3;
+  --color-blue-250: #93aac5;
+  --color-blue-300: #7d98b9;
+  --color-blue-350: #6887ad;
+  --color-blue-400: #5276a1;
+  --color-blue-450: #3d6596;
+  --color-blue-500: #27548a;
+  --color-blue-550: #234c7c;
+  --color-blue-600: #1f436e;
+  --color-blue-650: #1b3b61;
+  --color-blue-700: #173253;
+  --color-blue-750: #142a45;
+  --color-blue-800: #102237;
+  --color-blue-850: #0c1929;
+  --color-blue-900: #08111c;
+  --color-blue-950: #060d15;
+  --color-blue: #27548a;
+  --color-beige-50: #fefdfc;
+  --color-beige-100: #fefcfa;
+  --color-beige-150: #fcfbf6;
+  --color-beige-200: #fbf9f2;
+  --color-beige-250: #faf7ee;
+  --color-beige-300: #f9f5ea;
+  --color-beige-350: #f8f3e7;
+  --color-beige-400: #f7f1e3;
+  --color-beige-450: #f6f0e0;
+  --color-beige-500: #f5eedc;
+  --color-beige-550: #ddd6c6;
+  --color-beige-600: #c4beb0;
+  --color-beige-650: #aca79a;
+  --color-beige-700: #938f84;
+  --color-beige-750: #7b776e;
+  --color-beige-800: #625f58;
+  --color-beige-850: #4a4742;
+  --color-beige-900: #31302c;
+  --color-beige-950: #252421;
+  --color-beige: #f5eedc;
+  --color-navy-50: #e8ebed;
+  --color-navy-100: #dce2e4;
+  --color-navy-150: #c3ccd1;
+  --color-navy-200: #a7b5bc;
+  --color-navy-250: #8c9da7;
+  --color-navy-300: #748995;
+  --color-navy-350: #5d7683;
+  --color-navy-400: #466271;
+  --color-navy-450: #2f4f60;
+  --color-navy-500: #183b4e;
+  --color-navy-550: #163546;
+  --color-navy-600: #132f3e;
+  --color-navy-650: #112937;
+  --color-navy-700: #0e232f;
+  --color-navy-750: #0c1e27;
+  --color-navy-800: #0a181f;
+  --color-navy-850: #071217;
+  --color-navy-900: #050c10;
+  --color-navy-950: #04090c;
+  --color-navy: #183b4e;
+  --color-yellow-50: #fcf6ee;
+  --color-yellow-100: #faf2e5;
+  --color-yellow-150: #f6e8d2;
+  --color-yellow-200: #f2debe;
+  --color-yellow-250: #eed4a9;
+  --color-yellow-300: #ebcb98;
+  --color-yellow-350: #e7c287;
+  --color-yellow-400: #e4b975;
+  --color-yellow-450: #e0b164;
+  --color-yellow-500: #dda853;
+  --color-yellow-550: #c7974b;
+  --color-yellow-600: #b18642;
+  --color-yellow-650: #9b763a;
+  --color-yellow-700: #856532;
+  --color-yellow-750: #6f542a;
+  --color-yellow-800: #584321;
+  --color-yellow-850: #423219;
+  --color-yellow-900: #2c2211;
+  --color-yellow-950: #21190c;
+  --color-yellow: #dda853;
+}
+/* @theme-colors-end */
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -45,13 +131,6 @@ html {
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-}
-
-@theme {
-  --color-ccblue: #27548a;
-  --color-ccbeige: #f5eedc;
-  --color-ccnavy: #183b4e;
-  --color-ccyellow: #dda853;
 }
 
 :root {

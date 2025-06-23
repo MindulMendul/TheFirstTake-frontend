@@ -1,18 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Camera, Mic, Type, Wand2, Heart, User, HelpCircle } from 'lucide-react';
+import LucideIcon from '@/components/icons/LucideIcon';
 
 export default function Home() {
-  const [inputMode, setInputMode] = useState('text');
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="max-w-5xl mx-auto px-4 py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-6 py-3 bg-white/80 text-[#27548A] rounded-full text-lg font-medium mb-8 shadow-sm">
-            <HelpCircle className="w-5 h-5 mr-2" />
+            <LucideIcon name={'AlarmClock'} className="w-5 h-5 mr-2" />
             패션을 잘 모르겠다면?
           </div>
 
@@ -39,14 +37,14 @@ export default function Home() {
                 </div>
                 <span className="text-gray-900 font-medium">상황 설명</span>
               </div>
-              <ArrowRight className="w-5 h-5 text-gray-400" />
+              <LucideIcon name={'ArrowRight'} className="w-5 h-5 text-gray-400" />
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-bold">
                   2
                 </div>
                 <span className="text-gray-500">AI 분석</span>
               </div>
-              <ArrowRight className="w-5 h-5 text-gray-400" />
+              <LucideIcon name={'ArrowRight'} className="w-5 h-5 text-gray-400" />
               <div className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center text-sm font-bold">
                   3
@@ -63,9 +61,9 @@ export default function Home() {
                 href="/chat"
                 className="inline-flex items-center px-12 py-5 bg-[#27548A] text-white font-bold rounded-2xl hover:bg-[#1e4068] transition-all transform hover:scale-105 shadow-lg text-xl"
               >
-                <Wand2 className="mr-4 w-6 h-6" />
+                <LucideIcon name={'Wand'} className="mr-4 w-6 h-6" />
                 AI가 딱 한 벌 골라주기
-                <ArrowRight className="ml-4 w-6 h-6" />
+                <LucideIcon name={'ArrowRight'} className="ml-4 w-6 h-6" />
               </Link>
               <p className="text-gray-500 mt-4 text-lg">⏱️ 30초면 완성! 복잡한 설문 없어요</p>
             </div>
@@ -76,7 +74,7 @@ export default function Home() {
         <div className="mt-16 grid md:grid-cols-3 gap-6">
           <div className="bg-white/80 p-6 rounded-2xl border border-gray-200">
             <div className="flex items-center mb-4">
-              <User className="w-8 h-8 text-[#27548A] mr-3" />
+              <LucideIcon name={'User'} className="w-8 h-8 text-[#27548A] mr-3" />
               <div>
                 <div className="font-semibold text-gray-900">김○○ (25세)</div>
                 <div className="text-sm text-gray-500">패션 완전 초보</div>
@@ -86,7 +84,7 @@ export default function Home() {
           </div>
           <div className="bg-white/80 p-6 rounded-2xl border border-gray-200">
             <div className="flex items-center mb-4">
-              <User className="w-8 h-8 text-[#27548A] mr-3" />
+              <LucideIcon name={'User'} className="w-8 h-8 text-[#27548A] mr-3" />
               <div>
                 <div className="font-semibold text-gray-900">이○○ (30세)</div>
                 <div className="text-sm text-gray-500">직장인</div>
@@ -96,7 +94,7 @@ export default function Home() {
           </div>
           <div className="bg-white/80 p-6 rounded-2xl border border-gray-200">
             <div className="flex items-center mb-4">
-              <User className="w-8 h-8 text-[#27548A] mr-3" />
+              <LucideIcon name={'User'} className="w-8 h-8 text-[#27548A] mr-3" />
               <div>
                 <div className="font-semibold text-gray-900">박○○ (22세)</div>
                 <div className="text-sm text-gray-500">대학생</div>

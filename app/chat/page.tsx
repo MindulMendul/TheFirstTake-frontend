@@ -130,7 +130,7 @@ export default function Chat() {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-[#F1FAFB]">
+      <div className="min-h-screen flex w-full bg-blue-100">
         <AppSidebar
           currentChatId={currentChatId}
           onChatSelect={handleChatSelect}
