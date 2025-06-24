@@ -1,12 +1,11 @@
-import { ColorType, makeColorSet } from '@/lib/color';
+import { ColorShadeFormat, parseColorSet } from '@/lib/color';
 import { cn } from '@/lib/utils';
-import { lightColorSet } from '@/styles/color';
 import { icons } from 'lucide-react'; // lucide import
 import { HTMLAttributes } from 'react';
 
 export interface LucideIconProps extends HTMLAttributes<HTMLOrSVGElement> {
   name: keyof typeof icons;
-  color?: ColorType;
+  color?: ColorShadeFormat;
   size?: number;
 }
 
@@ -18,7 +17,7 @@ export default function LucideIcon({ name, color = 'blue-500', size = 16, ...pro
 
   return (
     <SelectLucideIcon
-      color={makeColorSet(lightColorSet)[color]}
+      color={parseColorSet(color, props.className?.includes('dark'))}
       size={size}
       className={cn(pointerStyle, props.className)}
       {...props}

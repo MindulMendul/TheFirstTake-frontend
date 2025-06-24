@@ -10,7 +10,7 @@ export default function Home() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-6 py-3 bg-white/80 text-[#27548A] rounded-full text-lg font-medium mb-8 shadow-sm">
-            <LucideIcon name={'AlarmClock'} className="w-5 h-5 mr-2" />
+            <LucideIcon name={'AlarmClock'} color={'blue-500'} className="w-5 h-5 mr-2 dark" />
             패션을 잘 모르겠다면?
           </div>
 
@@ -59,7 +59,7 @@ export default function Home() {
             <div className="text-center">
               <Link
                 href="/chat"
-                className="inline-flex items-center px-12 py-5 bg-[#27548A] text-white font-bold rounded-2xl hover:bg-[#1e4068] transition-all transform hover:scale-105 shadow-lg text-xl"
+                className="dark inline-flex items-center px-12 py-5 bg-blue text-blue font-bold rounded-2xl hover:bg-[#1e4068] transition-all transform hover:scale-105 shadow-lg text-xl"
               >
                 <LucideIcon name={'Wand'} className="mr-4 w-6 h-6" />
                 AI가 딱 한 벌 골라주기
