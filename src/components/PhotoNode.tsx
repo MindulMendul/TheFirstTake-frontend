@@ -1,7 +1,7 @@
 'use client';
 
-import { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
+import Image from 'next/image';
 
 interface PhotoNodeProps {
   data: {
@@ -11,13 +11,13 @@ interface PhotoNodeProps {
   };
 }
 
-export const PhotoNode = memo(({ data }: PhotoNodeProps) => {
+export const PhotoNode = ({ data }: PhotoNodeProps) => {
   return (
     <div className="bg-white rounded-lg border-2 border-[#4993FA] shadow-lg overflow-hidden min-w-[150px]">
       <Handle type="target" position={Position.Top} className="bg-[#4993FA]" />
 
       <div className="p-2">
-        <img src={data.imageUrl} alt={data.label} className="w-full h-24 object-cover rounded" />
+        <Image src={data.imageUrl} alt={data.label} className="w-full h-24 object-cover rounded" />
 
         <div className="mt-2">
           <h3 className="font-medium text-sm text-gray-800 truncate">{data.label}</h3>
@@ -35,4 +35,4 @@ export const PhotoNode = memo(({ data }: PhotoNodeProps) => {
       <Handle type="source" position={Position.Bottom} className="bg-[#4993FA]" />
     </div>
   );
-});
+};

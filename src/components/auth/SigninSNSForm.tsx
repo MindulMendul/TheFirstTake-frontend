@@ -1,8 +1,10 @@
+import Image from 'next/image';
+
 export default function SigninSNSForm() {
   return (
     <div className="grid grid-cols-3 gap-4">
       <button className="flex justify-center items-center p-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 shadow-sm hover:shadow-md">
-        <img
+        <Image
           src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
           alt="Google"
           className="w-6 h-6"

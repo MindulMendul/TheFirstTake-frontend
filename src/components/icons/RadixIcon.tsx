@@ -2,12 +2,12 @@ import React from 'react';
 import * as icons from '@radix-ui/react-icons'; // Radix Icon 컴포넌트 import
 import { IconProps } from '@radix-ui/react-icons/dist/types';
 import { cn } from '@/lib/utils';
-import colorSet, { ColorType } from '@/styles/color';
+import { ColorShadeFormat, parseColorSet } from '@/lib/color';
 
 export interface RadixIconProps extends IconProps {
   name: keyof typeof icons;
   size?: number;
-  color?: ColorType;
+  color?: ColorShadeFormat;
 }
 
 function RadixIcon({ name, size = 16, color = 'blue-500', ...props }: RadixIconProps) {
@@ -22,7 +22,7 @@ function RadixIcon({ name, size = 16, color = 'blue-500', ...props }: RadixIconP
       height={size}
       className={cn(pointerStyle, props.className)}
       {...props}
-      color={colorSet[color]}
+      color={parseColorSet(color, props.className?.includes('dark'))}
     />
   );
 }

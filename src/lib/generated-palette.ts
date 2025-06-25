@@ -22,7 +22,7 @@ export const colorSet = {
       '900': '#08111c',
       '950': '#060d15',
       DEFAULT: '#27548a',
-    },
+    } as const,
     beige: {
       '50': '#fefdfc',
       '100': '#fefcfa',

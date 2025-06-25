@@ -21,6 +21,7 @@ import { useRouter } from 'next/navigation';
 import { PhotoNode } from '@/components/PhotoNode';
 import { GroupNode } from '@/components/GroupNode';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import Image from 'next/image';
 
 const nodeTypes = {
   photo: PhotoNode,
@@ -215,7 +216,7 @@ export default function GraphPage() {
 
     setGroupModels(newGroupModels);
     setGroupInitialSizes(newGroupSizes);
-  }, [nodes]);
+  }, [nodes, groupInitialSizes, groupModels, setNodes]);
 
   // 드래그 시작 핸들러
   const onNodeDragStart = useCallback(
@@ -527,7 +528,7 @@ export default function GraphPage() {
 
                   {/* 모델 이미지 */}
                   <div className="relative mb-3">
-                    <img src={modelData.modelImage} alt="모델" className="w-full h-48 object-cover rounded-lg" />
+                    <Image src={modelData.modelImage} alt="모델" className="w-full h-48 object-cover rounded-lg" />
                   </div>
 
                   {/* 착용 아이템 목록 */}

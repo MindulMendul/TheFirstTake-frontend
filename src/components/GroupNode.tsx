@@ -10,7 +10,7 @@ interface GroupNodeProps {
   };
 }
 
-export const GroupNode = memo(({ data }: GroupNodeProps) => {
+export const GroupNode = ({ data }: GroupNodeProps) => {
   return (
     <>
       <NodeResizer minWidth={200} minHeight={150} />
@@ -22,4 +22,4 @@ export const GroupNode = memo(({ data }: GroupNodeProps) => {
       </div>
     </>
   );
-});
+};
