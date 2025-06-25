@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { MessageSquare, Plus, Settings, ChevronRight } from 'lucide-react';
+import { MessageSquare, Plus, Settings, PanelLeftIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useIsMobile } from '@/shared/hooks/use-mobile';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 interface Chat {
   id: string;
@@ -17,6 +19,8 @@ interface AppSidebarProps {
 
 export function AppSidebar({ currentChatId, onChatSelect, onNewChat }: AppSidebarProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const isMobile = useIsMobile();
   const [chats] = useState<Chat[]>([
     {
       id: '1',
@@ -26,84 +30,98 @@ export function AppSidebar({ currentChatId, onChatSelect, onNewChat }: AppSideba
     },
   ]);
 
+  // 모바일: 상단바의 햄버거 버튼 클릭 시만 Sheet 오픈 (오른쪽에서 나옴)
+  if (isMobile) {
+    if (typeof window !== 'undefined') {
+      const trigger = document.getElementById('mobile-sidebar-trigger');
+      if (trigger && !trigger.onclick) {
+        trigger.onclick = () => setMobileOpen(true);
+      }
+    }
+    return (
+      <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+        <SheetContent side="left" className="p-0 w-80 max-w-full pt-16">
+          <div className="flex flex-col items-start py-6 h-full">
+            <button
+              onClick={onNewChat}
+              className="flex items-center w-full px-4 mb-4 h-12 rounded-lg bg-[#4993FA] text-white"
+            >
+              <Plus className="w-5 h-5" />
+              <span className="ml-3 font-medium whitespace-nowrap">새 채팅</span>
+            </button>
+            <div className="flex-1 flex flex-col gap-2 w-full">
+              {chats.map((chat) => (
+                <button
+                  key={chat.id}
+                  onClick={() => { onChatSelect(chat.id); setMobileOpen(false); }}
+                  className={`flex items-center w-full px-4 h-12 rounded-lg transition-all duration-200 ${currentChatId === chat.id ? 'bg-[#4993FA] text-white' : 'hover:bg-[#F1FAFB] text-[#4993FA]'}`}
+                >
+                  <MessageSquare className="w-5 h-5" />
+                  <span className="ml-3 font-medium whitespace-nowrap">{chat.title}</span>
+                </button>
+              ))}
+            </div>
+            <button
+              className="flex items-center w-full px-4 h-12 rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 mt-auto mb-2"
+            >
+              <Settings className="w-5 h-5" />
+              <span className="ml-3 font-medium whitespace-nowrap">설정</span>
+            </button>
+          </div>
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
+  // 데스크탑: 왼쪽에 오버레이 사이드바, 호버 시 오버레이
   return (
     <div
-      className={`bg-white border-r border-gray-200 flex transition-all duration-300 ease-in-out ${
-        isExpanded ? 'w-72' : 'w-16'
-      }`}
+      className={`fixed top-0 left-0 h-screen z-50 transition-all duration-300 ease-in-out shadow-lg bg-white
+        ${isExpanded ? 'w-80' : 'w-16'}
+        flex flex-col items-start py-4
+      `}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
+      style={{ pointerEvents: 'auto' }}
     >
-      {/* Collapsed content - always visible */}
-      <div className="w-16 h-full flex flex-col items-center py-4 flex-shrink-0">
-        <Button onClick={onNewChat} className="w-10 h-10 p-0 bg-[#4993FA] hover:bg-[#3A7BD8] text-white mb-4">
-          <Plus className="w-5 h-5" />
-        </Button>
-
-        <div className="flex-1 flex flex-col gap-2">
-          {chats.map((chat) => (
-            <button
-              key={chat.id}
-              onClick={() => onChatSelect(chat.id)}
-              className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
-                currentChatId === chat.id ? 'bg-[#4993FA] text-white' : 'hover:bg-[#F1FAFB] text-[#4993FA]'
-              }`}
-            >
-              <MessageSquare className="w-5 h-5" />
-            </button>
-          ))}
-        </div>
-
-        <button className="w-10 h-10 rounded-lg flex items-center justify-center text-gray-600 hover:text-gray-800 hover:bg-gray-100">
-          <Settings className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* Expanded content - shows when expanded */}
-      <div
-        className={`w-56 h-full transition-all duration-300 ease-in-out ${
-          isExpanded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full pointer-events-none'
-        }`}
+      {/* + 새 채팅 버튼 */}
+      <button
+        onClick={onNewChat}
+        className={`flex items-center w-full px-2 mb-4 h-12 rounded-lg transition-all duration-200
+          bg-[#4993FA] text-white ${isExpanded ? 'pl-4 pr-4' : 'pl-4 pr-4'}
+        `}
       >
-        <div className="p-4">
-          <Button
-            onClick={onNewChat}
-            className="w-full bg-[#4993FA] hover:bg-[#3A7BD8] text-white flex items-center gap-2"
+        <Plus className="w-5 h-5" />
+        {isExpanded && <span className="ml-3 font-medium whitespace-nowrap">새 채팅</span>}
+      </button>
+
+      {/* 채팅방 버튼들 */}
+      <div className="flex-1 flex flex-col gap-2 w-full">
+        {chats.map((chat) => (
+          <button
+            key={chat.id}
+            onClick={() => onChatSelect(chat.id)}
+            className={`flex items-center w-full px-2 h-12 rounded-lg transition-all duration-200
+              ${currentChatId === chat.id ? 'bg-[#4993FA] text-white' : 'hover:bg-[#F1FAFB] text-[#4993FA]'}
+              ${isExpanded ? 'pl-4 pr-4' : 'pl-4 pr-4'}
+            `}
           >
-            <Plus className="w-4 h-4" />새 채팅
-          </Button>
-        </div>
-
-        <div className="px-4">
-          <div className="mb-2">
-            <span className="text-gray-600 text-sm">최근 채팅</span>
-          </div>
-          <div className="space-y-1">
-            {chats.map((chat) => (
-              <button
-                key={chat.id}
-                onClick={() => onChatSelect(chat.id)}
-                className={`w-full p-3 rounded-lg text-left transition-colors ${
-                  currentChatId === chat.id ? 'bg-[#4993FA] text-white' : 'hover:bg-[#F1FAFB]'
-                }`}
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <MessageSquare className="w-4 h-4 text-[#4993FA]" />
-                  <span className="font-medium text-sm truncate">{chat.title}</span>
-                </div>
-                {chat.lastMessage && <p className="text-xs text-gray-500 truncate">{chat.lastMessage}</p>}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="absolute bottom-4 left-16 right-4">
-          <button className="w-full flex items-center gap-2 text-gray-600 hover:text-gray-800 p-2 rounded-lg hover:bg-gray-100">
-            <Settings className="w-4 h-4" />
-            설정
+            <MessageSquare className="w-5 h-5" />
+            {isExpanded && <span className="ml-3 font-medium whitespace-nowrap">{chat.title}</span>}
           </button>
-        </div>
+        ))}
       </div>
+
+      {/* 설정 버튼 */}
+      <button
+        className={`flex items-center w-full px-2 h-12 rounded-lg transition-all duration-200 mt-auto mb-2
+          text-gray-600 hover:text-gray-800 hover:bg-gray-100
+          ${isExpanded ? 'pl-4 pr-4' : 'pl-4 pr-4'}
+        `}
+      >
+        <Settings className="w-5 h-5" />
+        {isExpanded && <span className="ml-3 font-medium whitespace-nowrap">설정</span>}
+      </button>
     </div>
   );
 }
