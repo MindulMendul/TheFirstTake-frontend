@@ -4,6 +4,8 @@ import { colorSet } from '@/lib/generated-palette';
 type ColorName = keyof ColorSet;
 type ShadeName = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 
+export type ColorShadeFormat = `${ColorName}-${ShadeName}`;
+
 export const parseColorSet = (
   colorShade: ColorShadeFormat,
   isDark: boolean = false,
@@ -18,5 +20,3 @@ export const parseColorSet = (
   }
   return defaultColor;
 };
-
-export type ColorShadeFormat = `${ColorName}-${ShadeName}`;

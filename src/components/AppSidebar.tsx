@@ -1,23 +1,6 @@
-'use client';
-
 import { useState } from 'react';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarFooter,
-} from '@/components/ui/sidebar';
-import { MessageSquare, Plus, Settings, BarChart3 } from 'lucide-react';
+import { MessageSquare, Plus, Settings, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PhotoFolder } from '@/components/PhotoFolder';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { useRouter } from 'next/navigation';
 
 interface Chat {
   id: string;
@@ -30,11 +13,10 @@ interface AppSidebarProps {
   currentChatId?: string;
   onChatSelect: (chatId: string) => void;
   onNewChat: () => void;
-  photos: any;
 }
 
-export function AppSidebar({ currentChatId, onChatSelect, onNewChat, photos }: AppSidebarProps) {
-  const router = useRouter();
+export function AppSidebar({ currentChatId, onChatSelect, onNewChat }: AppSidebarProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const [chats] = useState<Chat[]>([
     {
       id: '1',
@@ -45,64 +27,83 @@ export function AppSidebar({ currentChatId, onChatSelect, onNewChat, photos }: A
   ]);
 
   return (
-    <Sidebar className="border-r border-gray-200">
-      {/* 헤더 */}
-      <div className="bg-white border-b border-gray-200 p-4 flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <SidebarTrigger />
-          <h1 className="text-2xl font-bold text-[#4993FA]">The First Take</h1>
+    <div
+      className={`bg-white border-r border-gray-200 flex transition-all duration-300 ease-in-out ${
+        isExpanded ? 'w-72' : 'w-16'
+      }`}
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+    >
+      {/* Collapsed content - always visible */}
+      <div className="w-16 h-full flex flex-col items-center py-4 flex-shrink-0">
+        <Button onClick={onNewChat} className="w-10 h-10 p-0 bg-[#4993FA] hover:bg-[#3A7BD8] text-white mb-4">
+          <Plus className="w-5 h-5" />
+        </Button>
+
+        <div className="flex-1 flex flex-col gap-2">
+          {chats.map((chat) => (
+            <button
+              key={chat.id}
+              onClick={() => onChatSelect(chat.id)}
+              className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${
+                currentChatId === chat.id ? 'bg-[#4993FA] text-white' : 'hover:bg-[#F1FAFB] text-[#4993FA]'
+              }`}
+            >
+              <MessageSquare className="w-5 h-5" />
+            </button>
+          ))}
         </div>
+
+        <button className="w-10 h-10 rounded-lg flex items-center justify-center text-gray-600 hover:text-gray-800 hover:bg-gray-100">
+          <Settings className="w-5 h-5" />
+        </button>
       </div>
 
-      <SidebarHeader className="p-4 bg-[#F1FAFB]">
-        <Button
-          onClick={onNewChat}
-          className="w-full bg-[#4993FA] hover:bg-[#3A7BD8] text-white flex items-center gap-2"
-        >
-          <Plus className="w-4 h-4" />새 채팅
-        </Button>
-        <div className="flex gap-2">
-          <PhotoFolder photos={photos} />
+      {/* Expanded content - shows when expanded */}
+      <div
+        className={`w-56 h-full transition-all duration-300 ease-in-out ${
+          isExpanded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full pointer-events-none'
+        }`}
+      >
+        <div className="p-4">
+          <Button
+            onClick={onNewChat}
+            className="w-full bg-[#4993FA] hover:bg-[#3A7BD8] text-white flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4" />새 채팅
+          </Button>
         </div>
-      </SidebarHeader>
 
-      <SidebarContent className="bg-[#F1FAFB]">
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-gray-600">최근 채팅</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {chats.map((chat) => (
-                <SidebarMenuItem key={chat.id}>
-                  <SidebarMenuButton
-                    onClick={() => onChatSelect(chat.id)}
-                    isActive={currentChatId === chat.id}
-                    className="flex flex-col items-start p-3 hover:bg-[#F1FAFB] rounded-lg"
-                  >
-                    <div className="flex items-center gap-2 w-full">
-                      <MessageSquare className="w-4 h-4 text-[#4993FA]" />
-                      <span className="font-medium text-sm truncate">{chat.title}</span>
-                    </div>
-                    {chat.lastMessage && (
-                      <p className="text-xs text-gray-500 mt-1 truncate w-full">{chat.lastMessage}</p>
-                    )}
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+        <div className="px-4">
+          <div className="mb-2">
+            <span className="text-gray-600 text-sm">최근 채팅</span>
+          </div>
+          <div className="space-y-1">
+            {chats.map((chat) => (
+              <button
+                key={chat.id}
+                onClick={() => onChatSelect(chat.id)}
+                className={`w-full p-3 rounded-lg text-left transition-colors ${
+                  currentChatId === chat.id ? 'bg-[#4993FA] text-white' : 'hover:bg-[#F1FAFB]'
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <MessageSquare className="w-4 h-4 text-[#4993FA]" />
+                  <span className="font-medium text-sm truncate">{chat.title}</span>
+                </div>
+                {chat.lastMessage && <p className="text-xs text-gray-500 truncate">{chat.lastMessage}</p>}
+              </button>
+            ))}
+          </div>
+        </div>
 
-      <SidebarFooter className="p-4 bg-[#F1FAFB]">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton className="flex items-center gap-2 text-gray-600 hover:text-gray-800">
-              <Settings className="w-4 h-4" />
-              설정
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
-    </Sidebar>
+        <div className="absolute bottom-4 left-16 right-4">
+          <button className="w-full flex items-center gap-2 text-gray-600 hover:text-gray-800 p-2 rounded-lg hover:bg-gray-100">
+            <Settings className="w-4 h-4" />
+            설정
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

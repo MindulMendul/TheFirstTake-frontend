@@ -130,27 +130,22 @@ export default function Chat() {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-blue-100">
-        <AppSidebar
-          currentChatId={currentChatId}
-          onChatSelect={handleChatSelect}
-          onNewChat={handleNewChat}
-          photos={photos}
-        />
+      <div className="min-h-screen flex w-full ">
+        <AppSidebar currentChatId={currentChatId} onChatSelect={handleChatSelect} onNewChat={handleNewChat} />
 
         <SidebarInset className="flex flex-col">
           {/* 채팅 영역 */}
           <div className="flex-1">
-            <ScrollArea className="h-[calc(100vh-200px)] bg-white p-4">
-              <div className="space-y-4">
+            <ScrollArea className="h-[calc(100vh-200px)] p-4">
+              <div className="space-y-4 max-w-[1024px] mx-auto">
                 {messages.map((message) => (
                   <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
                     <div
-                      className={`max-w-[70%] p-3 rounded-lg ${
-                        message.isUser ? 'bg-[#4993FA] text-white' : 'bg-white text-gray-800'
+                      className={`max-w-[70%] p-6 rounded-lg ${
+                        message.isUser ? 'bg-blue-500 text-beige-50' : 'bg-yellow-100 text-navy-800'
                       }`}
                     >
-                      <p className="text-lg md:text-2xl">{message.text}</p>
+                      <p className="text-lg md:text-3xl">{message.text}</p>
                       {message.images && (
                         <div className="grid grid-cols-2 gap-2 mt-3">
                           {message.images.map((image, index) => (
@@ -165,7 +160,7 @@ export default function Chat() {
                           ))}
                         </div>
                       )}
-                      <p className="text-xs opacity-70 mt-1">{message.timestamp.toLocaleTimeString()}</p>
+                      <p className="text-xs opacity-70 mt-2">{message.timestamp.toLocaleTimeString()}</p>
                     </div>
                   </div>
                 ))}
@@ -173,27 +168,47 @@ export default function Chat() {
             </ScrollArea>
 
             {/* 입력 영역 */}
-            <div className="mt-4 flex gap-2">
+            <div
+              // 1. 부모 컨테이너를 Flexbox로 만듭니다.
+              className="
+              shrink-0
+    flex flex-col items-end gap-2 w-full max-w-[1024px] mx-auto 
+    bg-white dark:bg-blue-800 
+    rounded-2xl border border-blue-500 dark:border-blue-800 
+    focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-800
+    transition-all duration-200
+    p-2
+  "
+            >
               <Textarea
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder="패션 추천을 요청해보세요..."
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSendMessage();
-                  }
-                }}
-                className="flex-1 resize-none min-h-[40px] max-h-[144px] text-base"
+                placeholder="패션에 대해 마음대로 물어보세요!"
+                className="
+      flex-1 bg-transparent resize-none
+      min-h-[48px] max-h-[80px]
+      text-3xl
+      px-5 py-3
+      border-none focus-visible:border-0 focus:outline-none focus:ring-0
+      dark:text-white
+    "
                 rows={1}
-                onInput={(e) => {
-                  const target = e.target as HTMLTextAreaElement;
-                  target.style.height = 'auto';
-                  target.style.height = Math.min(target.scrollHeight, 144) + 'px';
-                }}
               />
-              <Button onClick={handleSendMessage} className="bg-[#4993FA] hover:bg-[#3A7BD8] text-white ">
-                <Send className="w-4 h-4" />
+              <Button
+                onClick={handleSendMessage}
+                disabled={inputValue.trim() === ''}
+                className="
+      flex-shrink-0 /* 3. 버튼은 공간이 부족해도 찌그러지지 않습니다. */
+      flex items-center justify-center
+      w-16 h-16 rounded-full
+      bg-blue-500 text-white 
+      hover:bg-blue-600
+      disabled:bg-slate-300 disabled:dark:bg-slate-600 disabled:cursor-not-allowed
+      transition-all duration-200
+      mb-1 /* 세로 정렬 미세 조정 */
+    "
+              >
+                <Send className="w-5 h-5" />
               </Button>
             </div>
           </div>
