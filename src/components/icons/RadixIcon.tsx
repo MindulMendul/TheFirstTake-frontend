@@ -10,7 +10,7 @@ export interface RadixIconProps extends IconProps {
   color?: ColorType;
 }
 
-function RadixIcon({ name, size = 16, color = 'gray9', ...props }: RadixIconProps) {
+function RadixIcon({ name, size = 16, color = 'blue-500', ...props }: RadixIconProps) {
   const SelectRadixIcon = icons[name];
 
   const isClickEvent = !!props.onClick;

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Folder, X } from 'lucide-react';
-import GraphPage from '@/app/graph/page';
+import GraphPage from '@/../app/graph/page';
 
 interface Photo {
   id: string;

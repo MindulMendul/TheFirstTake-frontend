@@ -1,6 +1,6 @@
 'use client';
 
-import { encrypt } from '@/utils/crypt';
+import { encrypt } from '@/lib/crypt';
 import { useState } from 'react';
 
 export default function SigninForm() {

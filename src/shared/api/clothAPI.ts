@@ -1,4 +1,4 @@
-import { requestAPI } from '@/apis/API';
+import { requestAPI } from '@/shared/api/API';
 
 // GET
 
